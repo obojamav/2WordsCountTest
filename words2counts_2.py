@@ -33,7 +33,7 @@ def main():
 ##    mapper_list = mapper(input_file)
 ##    reducer_list = reducer(mapper_file)
 
-    rdd = nput_file.parallelize(mapper)
+    rdd = input_file.parallelize(mapper)
     words = rdd.map(lambda word : ((word, 1)))
     wz = words.reduceByKey(lambda a, b: a + b)
     wz.saveAsTextFile('/user/cloudera/wz/output')
