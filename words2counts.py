@@ -30,11 +30,8 @@ def reducer(map_list):
 def main():
     sc = SparkContext(appName="2WordCount")
     input_file = sc.textFile('/user/cloudera/wz/test_wordcount.txt')
-    mapper_list = mapper(input_file)
-    reducer_list = reducer(mapper_file)
-
-    rdd = sc.parallelize(reducer_list)
-    words = rdd.map(lambda word : ((word, 1)))
+    token = input_file.map(mapper)
+    words = token.map(lambda word : ((word, 1)))
     wz = words.reduceByKey(lambda a, b: a + b)
     wz.saveAsTextFile('/user/cloudera/wz/output')
     sc.stop()
